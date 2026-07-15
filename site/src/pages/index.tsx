@@ -21,7 +21,7 @@ function HomepageHeader() {
           <Link
             className="button button--secondary button--lg"
             to="/docs/intro">
-            Getting Started Tutorial
+            Read the documentation
           </Link>
         </div>
       </div>
@@ -34,7 +34,7 @@ export default function Home(): ReactNode {
   return (
     <Layout
       title={`${siteConfig.title}`}
-      description="OpenTelemetry Metrics for your Oracle AI Database instances">
+      description="Collect Oracle performance data in PostgreSQL for SQL-backed Grafana dashboards">
       <HomepageHeader />
       <main>
         <HomepageFeatures />

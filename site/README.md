@@ -1,56 +1,36 @@
-# Website
+# Documentation Site
 
-This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
+The Oracle DB Performance Scraper documentation is built with Docusaurus.
+Source documentation lives in `docs/`; generated output is written to `build/`
+and is not committed.
 
-The `content` directory contains the built, static site.
+## Requirements
 
-Requirements:
-- latest version of NodeJS
-
-## Installation
-
-```bash
-npm
-```
+- Node.js 22
+- npm
 
 ## Local Development
+
+Install the locked dependencies:
+
+```bash
+npm ci
+```
+
+Start the development server with live reload:
 
 ```bash
 npm start
 ```
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+## Production Preview
 
-## Build
+Build the same static site used by GitHub Pages:
 
 ```bash
-rm -rf ../docs
 npm run build
-cp -r build ../docs
+npm run serve
 ```
 
-## Versioning 
-
-```bash
-npm run docusaurus docs:version 1.1.0
-```
-
-Then, add the version to the `docusaurus.config.ts` versions navbar.
-
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
-
-## Deployment
-
-Using SSH:
-
-```bash
-USE_SSH=true yarn deploy
-```
-
-Not using SSH:
-
-```bash
-GIT_USER=<Your GitHub username> yarn deploy
-```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+The GitHub Pages workflow builds and deploys `site/build` after documentation
+changes are pushed to `main`.

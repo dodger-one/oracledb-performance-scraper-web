@@ -1,5 +1,13 @@
-.PHONY: docs-build
-docs:
-	rm -rf ../docs
+.PHONY: install start build serve
+
+install:
+	npm ci
+
+start:
+	npm start
+
+build:
 	npm run build
-	cp -r build ../docs
+
+serve:
+	npm run serve

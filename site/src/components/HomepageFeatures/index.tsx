@@ -11,31 +11,32 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Monitor From Anywhere',
+    title: 'Flexible Deployment',
     Svg: require('@site/static/img/logo.svg').default,
     description: (
       <>
-        Run the Oracle DB Performance Scraper as a local binary, container, or in Kubernetes.
-          Use pre-built AMD64 and ARM64 images to easily get started.
+        Run the scraper as a Linux service, container, Docker Compose service,
+        or Kubernetes workload.
       </>
     ),
   },
   {
-    title: 'Extensible Database Metrics',
+    title: 'PostgreSQL History',
     Svg: require('@site/static/img/logo.svg').default,
     description: (
       <>
-        Use the default, include database metrics or define custom metrics with plain SQL queries in simple <code>YAML</code> or <code>TOML</code> files.
+        Store SQL, session, blocking, activity, and configurable metric samples
+        in partitioned PostgreSQL tables with retention.
       </>
     ),
   },
   {
-    title: 'Multiple Databases? No Problem',
+    title: 'Performance Troubleshooting',
     Svg: require('@site/static/img/logo.svg').default,
     description: (
       <>
-        Easily monitor one or more databases with a single scraper.
-          One of your databases down or under maintenance? You'll still receive metrics from the others.
+        Investigate database activity, SQL performance, current sessions, and
+        blocking with PostgreSQL-backed Grafana dashboards.
       </>
     ),
   },

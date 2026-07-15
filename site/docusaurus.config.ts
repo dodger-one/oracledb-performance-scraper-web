@@ -22,7 +22,7 @@ const config: Config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName : 'dodger-one',
-  projectName : 'oracledb-performance-scraper',
+  projectName : 'oracledb-performance-scraper-web',
 
   onBrokenLinks : 'throw',
   markdown : {
@@ -78,20 +78,7 @@ const config: Config = {
           label : 'Docs',
         },
         {
-          type : 'docsVersionDropdown',
-          versions : [
-            'current',
-            '2.4.0',
-            '2.3.1',
-            '2.3.0',
-            '2.2.2',
-            '2.2.1',
-            '2.2.0',
-            '2.1.0',
-          ]
-        },
-        {
-          href : 'https://github.com/dodger-one/oracledb-performance-scraper',
+          href : 'https://github.com/dodger-one/oracledb-performance-scraper-web',
           label : 'GitHub',
           position : 'right',
         },
@@ -132,7 +119,7 @@ const config: Config = {
             {
               label : 'GitHub',
               href :
-                  'https://github.com/dodger-one/oracledb-performance-scraper',
+                  'https://github.com/dodger-one/oracledb-performance-scraper-web',
             },
           ],
         },
