@@ -12,7 +12,7 @@ Over time, this project will provide not just metrics, but also logging and trac
 
 Contributions are welcome - please see [contributing](https://github.com/oracle/oracle-db-appdev-monitoring/blob/main/CONTRIBUTING.md).
 
-![Oracle AI Database Dashboard](/img/exporter-running-against-basedb.png)
+![Oracle AI Database Dashboard](/img/scraper-running-against-basedb.png)
 
 ## Main Features
 
@@ -40,4 +40,3 @@ The Oracle AI Database Metrics Exporter natively supports Oracle AI Database ver
 From the v1.0 release onwards, this project provides a [Prometheus](https://prometheus.io/) exporter for Oracle AI Database based in part on a Prometheus exporter created by [Seth Miller](https://github.com/iamseth/oracledb_exporter). This project includes changes to comply with various Oracle standards and policies, as well as new features.
 
 > Seth has archived his exporter as of Feb 13, 2025 and added a note encouraging people to check out ours instead.  We wanted to extend a huge "Thank You!" to Seth for the work he did on that exporter, and his contributions to the Oracle and open source communities!
-
