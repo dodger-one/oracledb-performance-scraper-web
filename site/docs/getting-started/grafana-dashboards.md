@@ -49,6 +49,11 @@ oracle_database_activity_samples
 This dashboard is the ASH/AAS-style historical view. It intentionally uses
 high-cardinality fields that should not be Prometheus labels.
 
+[![Database Activity History dashboard showing average active sessions, top SQL, top sessions, and recent activity](/img/screenshots/dah.png)](/img/screenshots/dah.png)
+
+_Database Activity History dashboard with anonymized sample data. Select the
+image to open it at full resolution._
+
 ### Oracle SQL Performance
 
 File:
@@ -75,6 +80,11 @@ oracle_sql_samples
 
 Use the `SQL_ID` textbox variable to drill into a specific statement.
 
+[![Oracle SQL Performance dashboard showing SQL delta rankings, efficiency outliers, and selected SQL timing](/img/screenshots/sql_performance.png)](/img/screenshots/sql_performance.png)
+
+_Oracle SQL Performance diagnostic panels with anonymized sample data. Select
+the image to open it at full resolution._
+
 ### Current Sessions and Blocking
 
 File:
@@ -100,6 +110,11 @@ oracle_blocking_session_samples
 
 This dashboard is the current-state triage view. Historical active-session
 graphs live in the DAH dashboard instead.
+
+[![Current Sessions and Blocking dashboard showing active sessions, waiters, blockers, and session inventory](/img/screenshots/sessions_and_blocking.png)](/img/screenshots/sessions_and_blocking.png)
+
+_Current Sessions and Blocking dashboard with anonymized sample data. Select
+the image to open it at full resolution._
 
 ## Importing Manually
 
