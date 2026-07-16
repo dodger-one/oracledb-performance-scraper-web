@@ -10,7 +10,7 @@ function initializeMatomo() {
   }
 
   queue.push([ 'setTrackerUrl', `${matomoUrl}matomo.php` ]);
-  queue.push([ 'setSiteId', '1' ]);
+  queue.push([ 'setSiteId', '2' ]);
   queue.push([ 'enableLinkTracking' ]);
 
   const script = document.createElement('script');
@@ -24,8 +24,7 @@ function initializeMatomo() {
 
 const clientModule = {
   onRouteDidUpdate({location, previousLocation}) {
-    if (previousLocation &&
-        location.pathname === previousLocation.pathname &&
+    if (previousLocation && location.pathname === previousLocation.pathname &&
         location.search === previousLocation.search &&
         location.hash === previousLocation.hash) {
       return;
