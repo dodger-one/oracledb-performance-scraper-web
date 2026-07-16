@@ -29,8 +29,8 @@ grant create session to scraperuser;
 grant select_catalog_role to scraperuser;
 ```
 
-For more controlled grants, the built-in default metrics and performance
-samplers need access to these views:
+For more controlled grants, the native performance collectors and optional
+operational metric pack use these views:
 
 ```sql
 grant select on sys.dba_tablespace_usage_metrics to scraperuser;
@@ -48,13 +48,12 @@ grant select on sys.gv_$parameter to scraperuser;
 grant select on sys.gv_$database to scraperuser;
 grant select on sys.gv_$active_session_history to scraperuser;
 grant select on sys.gv_$sql to scraperuser;
-grant select on sys.gv_$sqlstats to scraperuser;
 grant select on sys.gv_$con_sysmetric to scraperuser;
 grant select on sys.v_$diag_alert_ext to scraperuser; -- for alert logs only
 ```
 
-Additional permissions may be required for custom metrics, depending on the
-tables and views used by those TOML files.
+Additional permissions may be required for user-defined metrics, depending on
+the tables and views queried by their definition files.
 
 Database Activity History uses `GV$ACTIVE_SESSION_HISTORY`. Confirm the
 applicable Oracle licensing requirements before relying on ASH-derived
@@ -93,12 +92,12 @@ Client:
 go build -tags goora -o oracledb_performance_scraper ./
 ```
 
-Install the binary and default metrics file:
+Install the binary and, optionally, the supplied operational metrics pack:
 
 ```bash
 sudo install -m 0755 oracledb_performance_scraper /usr/local/bin/oracledb_performance_scraper
 sudo mkdir -p /etc/oracledb-monitor /var/log/oracledb-monitor
-sudo cp default-metrics.toml /etc/oracledb-monitor/default-metrics.toml
+sudo cp oracle-operational-metrics.toml /etc/oracledb-monitor/oracle-operational-metrics.toml
 ```
 
 ## Minimal Configuration
@@ -119,8 +118,8 @@ databases:
 
 metrics:
   scrapeInterval: 15s
-  default: /etc/oracledb-monitor/default-metrics.toml
-  custom: []
+  definitions:
+    - /etc/oracledb-monitor/oracle-operational-metrics.toml
 
 output:
   postgresql:

@@ -21,5 +21,6 @@ high-cardinality for Prometheus:
 - Improve alert log collection and dashboarding.
 - Provide additional pre-built Grafana dashboards.
 
-Lower-cardinality operational metrics should continue to use
-`default-metrics.toml` or custom metrics stored in `oracle_metric_samples`.
+Bounded operational measurements can use optional files listed under
+`metrics.definitions` and stored in `oracle_metric_samples`. Unbounded
+diagnostic entities should use dedicated typed collectors and tables.

@@ -28,8 +28,8 @@ databases:
 metrics:
   scrapeInterval: 15s
   connectionBackoff: 5m
-  default: /etc/oracledb-monitor/default-metrics.toml
-  custom: []
+  definitions:
+    - /etc/oracledb-monitor/oracle-operational-metrics.toml
 
 output:
   postgresql:
@@ -82,22 +82,29 @@ The scraper may also load database credentials from [OCI Vault](./oci-vault.md),
 metrics:
   scrapeInterval: 15s
   connectionBackoff: 5m
-  default: /etc/oracledb-monitor/default-metrics.toml
-  custom:
-    - /etc/oracledb-monitor/custom-metrics.toml
+  definitions:
+    - /etc/oracledb-monitor/oracle-operational-metrics.toml
+    - /etc/oracledb-monitor/application-metrics.toml
 ```
 
 - `scrapeInterval`: How often the scraper collects Oracle data and writes to
   PostgreSQL. Configure this for continuous collection.
 - `connectionBackoff`: How long to wait before retrying an invalid database
   connection. Defaults to `5m`.
-- `default`: Path to the default TOML metrics file.
-- `custom`: Optional list of additional TOML metric files.
+- `definitions`: Optional ordered list of TOML or YAML files containing
+  additional SQL-derived metrics. Later files override duplicate generated
+  metric identifiers from earlier files. If omitted, only native performance
+  collectors run.
 - `databaseLabel`: Label key used for generic metric samples. Defaults to
   `database`.
 
-Custom TOML metrics are stored in `oracle_metric_samples`. High-cardinality
-Oracle performance samplers write to the dedicated SQL/session/DAH tables.
+Additional metric definitions are stored in `oracle_metric_samples`. Native
+Oracle performance collectors write to dedicated SQL, session, blocking, and
+DAH tables regardless of whether `definitions` is configured.
+
+The removed pre-beta keys `default` and `custom` are rejected by strict YAML
+parsing. See [Additional Metrics](./additional-metrics.md) for migration and
+cardinality guidance.
 
 ## PostgreSQL Output
 

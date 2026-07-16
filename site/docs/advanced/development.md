@@ -12,13 +12,13 @@ The runtime flow is:
 
 - Parse `--config.file` and expand environment variables.
 - Load database, metric, PostgreSQL output, logging, and web configuration.
-- Load `default-metrics.toml` and any configured custom metric files.
+- Load any optional files listed under `metrics.definitions`.
 - Open Oracle connection pools for each configured source database.
 - Open the PostgreSQL connection pool and run schema migrations when
   `output.postgresql.autoMigrate` is enabled.
 - Start the lightweight web listener for `/healthz` and `/`.
-- Start scheduled collectors for default metrics, custom metrics, performance
-  samples, session samples, blocking samples, DAH samples, and alert logs.
+- Start scheduled native collectors for SQL, sessions, blocking, DAH, and alert
+  logs, plus any configured additional metrics.
 
 Generic TOML/YAML metrics are written to `oracle_metric_samples`. Performance
 collectors write to dedicated tables such as `oracle_sql_samples`,

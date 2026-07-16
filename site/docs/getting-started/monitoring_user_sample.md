@@ -64,7 +64,6 @@ GRANT SELECT ON sys.gv_$parameter TO monitoring_user;
 GRANT SELECT ON sys.gv_$database TO monitoring_user;
 GRANT SELECT ON sys.gv_$active_session_history TO monitoring_user;
 GRANT SELECT ON sys.gv_$sql TO monitoring_user;
-GRANT SELECT ON sys.gv_$sqlstats TO monitoring_user;
 GRANT SELECT ON sys.gv_$con_sysmetric TO monitoring_user;
 ```
 
@@ -74,7 +73,7 @@ To collect alert logs, also grant:
 GRANT SELECT ON sys.v_$diag_alert_ext TO monitoring_user;
 ```
 
-Additional permissions may be required for custom metrics.
+Additional permissions may be required for user-defined metric queries.
 
 Database Activity History uses `GV$ACTIVE_SESSION_HISTORY`. Confirm the
 applicable Oracle licensing requirements before enabling or relying on

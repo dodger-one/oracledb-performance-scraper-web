@@ -80,7 +80,7 @@ Use the `SQL_ID` textbox variable to drill into a specific statement.
 File:
 
 ```text
-docker-compose/grafana/dashboards/oracle-postgresql-performance.json
+docker-compose/grafana/dashboards/oracle-sessions-and-blocking.json
 ```
 
 Purpose:

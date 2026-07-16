@@ -5,9 +5,8 @@ sidebar_position: 3
 
 # Kubernetes
 
-The scraper can run in Kubernetes, but it is no longer scraped by Prometheus.
-It needs outbound network access to Oracle and PostgreSQL, and it exposes only a
-health endpoint on port `9161`.
+The scraper needs outbound network access to Oracle and PostgreSQL. It exposes a
+health endpoint on port `9161` for probes and operational checks.
 
 The examples below assume a namespace named `scraper`.
 
@@ -44,8 +43,8 @@ databases:
 
 metrics:
   scrapeInterval: 15s
-  default: /etc/oracledb-monitor/default-metrics.toml
-  custom: []
+  definitions:
+    - /oracle-operational-metrics.toml
 
 output:
   postgresql:
@@ -70,8 +69,9 @@ kubectl create cm oracle-db-scraper-config \
   -n scraper
 ```
 
-If you use custom TOML metrics, create another config map for those files and
-mount them into the pod. Reference the mounted paths from `metrics.custom`.
+For user-defined additional metrics, create a config map for the definition
+files, mount them into the pod, and list their paths under
+`metrics.definitions`.
 
 ## Wallets
 
@@ -88,8 +88,7 @@ A deployment should provide:
 - `ORACLE_CONNECT_STRING` as an environment variable or config value
 - `POSTGRES_URL` from the PostgreSQL secret
 - a volume mount for the config file
-- a volume mount for `default-metrics.toml`
-- optional volume mounts for custom metrics or wallets
+- optional volume mounts for additional metric definitions or wallets
 
 The container command should run:
 
@@ -117,11 +116,6 @@ Health check:
 kubectl port-forward svc/oracle-db-scraper 9161:9161 -n scraper
 curl http://127.0.0.1:9161/healthz
 ```
-
-## Prometheus ServiceMonitor
-
-Do not configure a Prometheus ServiceMonitor for this scraper. Oracle metrics
-are written to PostgreSQL, not exposed on `/metrics`.
 
 ## Grafana
 

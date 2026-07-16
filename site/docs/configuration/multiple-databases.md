@@ -42,7 +42,8 @@ databases:
 
 metrics:
   scrapeInterval: 15s
-  default: default-metrics.toml
+  definitions:
+    - /etc/oracledb-monitor/oracle-operational-metrics.toml
 
 output:
   postgresql:
@@ -57,8 +58,8 @@ queries use `GV$` views where instance-level data is needed.
 
 ## Per-Database Metric Selection
 
-Default and custom TOML/YAML metrics run against every configured database unless
-the metric definition has a `databases` field.
+Additional TOML/YAML metrics run against every configured database unless the
+definition has a `databases` field.
 
 ```toml
 [[metric]]

@@ -10,18 +10,18 @@ schedule and stores it in PostgreSQL for Grafana dashboards and troubleshooting.
 This is not a Prometheus exporter. It does not expose Oracle metrics on `/metrics`. Instead, it:
 
 - connects to one or more Oracle databases,
-- collects default and custom TOML metrics,
-- collects SQL, session, blocking-session, and Database Activity History style
-  samples,
+- collects native SQL, session, blocking-session, and Database Activity History
+  samples by default,
+- optionally collects additional SQL-derived metrics from TOML or YAML
+  definitions,
 - writes those samples to PostgreSQL,
 - exposes a small health endpoint on `/healthz`,
 - lets Grafana read PostgreSQL directly.
 
-The design goal is to keep Prometheus-style, low-cardinality monitoring
-separate from high-cardinality diagnostic data. Details such as `SQL_ID`, child
-cursor, plan hash, SID, serial number, module, machine, wait event, and blocking
-session are useful for investigations but are poor Prometheus labels. They are a
-better fit for PostgreSQL tables and SQL-backed Grafana dashboards.
+Native performance data uses dedicated PostgreSQL tables. Details such as
+`SQL_ID`, child cursor, plan hash, SID, serial number, module, machine, wait
+event, and blocking session remain relational columns that can be indexed and
+queried by SQL-backed Grafana dashboards.
 
 ## Main Features
 
@@ -29,8 +29,8 @@ better fit for PostgreSQL tables and SQL-backed Grafana dashboards.
 - PostgreSQL storage using batched inserts.
 - Daily range-partitioned PostgreSQL sample tables created on demand.
 - Optional PostgreSQL retention that drops old daily partitions.
-- Default Oracle metric collection from `default-metrics.toml`.
-- Optional custom TOML metrics.
+- Optional additional metrics loaded from ordered TOML or YAML definition
+  files, including the supplied `oracle-operational-metrics.toml` pack.
 - Direct performance collection from Oracle dynamic performance views:
   - `GV$SQL`
   - `GV$SESSION`

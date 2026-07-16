@@ -9,6 +9,15 @@ List of upcoming and historic changes to the scraper.
 
 ### Next, TBD
 
+- Replace `metrics.default` and `metrics.custom` with one optional ordered
+  `metrics.definitions` list. Native SQL, session, blocking, and DAH collection
+  now runs without any generic metric definition file.
+- Rename the supplied metric pack from `default-metrics.*` to
+  `oracle-operational-metrics.*`, stop embedding it as a fallback, and remove
+  its duplicated high-cardinality `top_sql` definition.
+- Document the boundary between native typed performance collectors and
+  additional SQL-derived metrics stored in `oracle_metric_samples`, including
+  PostgreSQL cardinality and retention considerations.
 - Rename the project runtime to scraper terminology, including Go types, the default binary name, Docker targets, sample manifests, and active documentation.
 - Replace the Prometheus scrape endpoint runtime with scheduled Oracle metric collection that writes neutral metric samples to PostgreSQL using batched `COPY` inserts.
 - Add PostgreSQL output configuration, schema auto-migration for scrape summaries and metric samples, and example configuration entries.
@@ -420,8 +429,8 @@ This release includes the following changes:
 
 The first production release, v1.0, includes the following features:
 
-- A number of [standard metrics](../getting-started/default-metrics.md) are exposed,
-- Users can define [custom metrics](../configuration/custom-metrics.md),
+- A number of standard metrics were included in the original exporter,
+- Users could define additional metrics,
 - Oracle regularly reviews third-party licenses and scans the code and images, including transitive/recursive dependencies for issues,
 - Connection to Oracle can be a basic connection or use an Oracle Wallet and TLS - connection to Oracle Autonomous Database is supported,
 - Metrics for Oracle Transactional Event Queues are also supported,
