@@ -7,8 +7,7 @@ sidebar_position: 1
 Oracle DB Performance Scraper collects Oracle database performance data on a
 schedule and stores it in PostgreSQL for Grafana dashboards and troubleshooting.
 
-This fork is no longer a Prometheus metrics endpoint. It does not expose Oracle
-metrics on `/metrics`. Instead, it:
+This is not a Prometheus exporter. It does not expose Oracle metrics on `/metrics`. Instead, it:
 
 - connects to one or more Oracle databases,
 - collects default and custom TOML metrics,
