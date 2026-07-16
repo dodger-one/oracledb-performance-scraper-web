@@ -1,15 +1,45 @@
-<!-- Matomo -->
-<script>
-  var _paq = window._paq = window._paq || [];
-  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-  _paq.push(['trackPageView']);
-  _paq.push(['enableLinkTracking']);
-  (function() {
-    var u="//matomo.ciberterminal.net/";
-    _paq.push(['setTrackerUrl', u+'matomo.php']);
-    _paq.push(['setSiteId', '1']);
-    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-  })();
-</script>
-<!-- End Matomo Code -->
+const matomoUrl = 'https://matomo.ciberterminal.net/';
+
+let initialized = false;
+
+function initializeMatomo() {
+  const queue = window._paq = window._paq || [];
+
+  if (initialized) {
+    return queue;
+  }
+
+  queue.push([ 'setTrackerUrl', `${matomoUrl}matomo.php` ]);
+  queue.push([ 'setSiteId', '1' ]);
+  queue.push([ 'enableLinkTracking' ]);
+
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = `${matomoUrl}matomo.js`;
+  document.head.appendChild(script);
+
+  initialized = true;
+  return queue;
+}
+
+const clientModule = {
+  onRouteDidUpdate({location, previousLocation}) {
+    if (previousLocation &&
+        location.pathname === previousLocation.pathname &&
+        location.search === previousLocation.search &&
+        location.hash === previousLocation.hash) {
+      return;
+    }
+
+    const queue = initializeMatomo();
+
+    // Docusaurus updates the document title after the route lifecycle callback.
+    setTimeout(() => {
+      queue.push([ 'setCustomUrl', window.location.href ]);
+      queue.push([ 'setDocumentTitle', document.title ]);
+      queue.push([ 'trackPageView' ]);
+    });
+  },
+};
+
+export default clientModule;
