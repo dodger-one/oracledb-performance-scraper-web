@@ -50,7 +50,7 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl :
-              'https://github.com/dodger-one/oracledb-performance-scraper-web/tree/main/site/',
+              'https://github.com/dodger-one/oracledb-performance-scraper/tree/main/site/',
         },
         theme : {
           customCss : './src/css/custom.css',
@@ -76,8 +76,7 @@ const config: Config = {
           label : 'Docs',
         },
         {
-          href :
-              'https://github.com/dodger-one/oracledb-performance-scraper-web',
+          href : 'https://github.com/dodger-one/oracledb-performance-scraper',
           label : 'GitHub',
           position : 'right',
         },
@@ -96,11 +95,12 @@ const config: Config = {
           ],
         },
         {
-          title : 'Community',
+          title : 'Issues',
           items : [
             {
-              label : 'Stack Overflow',
-              href : 'https://stackoverflow.com/questions/tagged/oracle',
+              label : 'GitHub Issue tracking',
+              href :
+                  'https://github.com/dodger-one/oracledb-performance-scraper/issues',
             },
           ],
         },
@@ -108,17 +108,14 @@ const config: Config = {
           title : 'More',
           items : [
             {
-              label : 'Oracle Blogs',
-              to : 'https://blogs.oracle.com/',
+              label : 'OneClickDBA',
+              to : 'https://oneclickdba.com/',
             },
-            {
-              label : 'Oracle LiveLabs',
-              to : 'https://livelabs.oracle.com/pls/apex/r/dbpm/livelabs/home'
-            },
+            {label : 'dodger-one CV', to : 'https://cv.ciberterminal.net'},
             {
               label : 'GitHub',
               href :
-                  'https://github.com/dodger-one/oracledb-performance-scraper-web',
+                  'https://github.com/dodger-one/oracledb-performance-scraper',
             },
           ],
         },
