@@ -6,7 +6,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 const config: Config = {
   title : 'Oracle DB Performance Scraper',
-  tagline : 'PostgreSQL-backed Oracle performance scraping',
+  tagline : 'High-performance observability for Oracle databases',
   favicon : 'img/favicon-32x32.png',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
@@ -18,6 +18,8 @@ const config: Config = {
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl : '/oracledb-performance-scraper-web/',
+
+  clientModules : [ './matomo.js' ],
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -43,10 +45,6 @@ const config: Config = {
     [
       'classic',
       {
-        gtag : {
-          trackingID : 'G-1PBTF5Y2GP',
-          anonymizeIP : true,
-        },
         docs : {
           sidebarPath : './sidebars.ts',
           // Please change this to your repo.
@@ -78,7 +76,8 @@ const config: Config = {
           label : 'Docs',
         },
         {
-          href : 'https://github.com/dodger-one/oracledb-performance-scraper-web',
+          href :
+              'https://github.com/dodger-one/oracledb-performance-scraper-web',
           label : 'GitHub',
           position : 'right',
         },
