@@ -1,70 +1,68 @@
-import type {ReactNode} from 'react';
-import clsx from 'clsx';
+import type {ComponentType, ReactNode} from 'react';
+import type {LucideProps} from 'lucide-react';
+import {
+  Box,
+  ChartNoAxesCombined,
+  Clock3,
+  Database,
+  Puzzle,
+  ShieldCheck,
+} from 'lucide-react';
 import Heading from '@theme/Heading';
 import styles from './styles.module.css';
 
 type FeatureItem = {
   title: string;
-  Svg: React.ComponentType<React.ComponentProps<'svg'>>;
-  description: ReactNode;
+  Icon: ComponentType<LucideProps>;
+  description: string;
 };
 
-const FeatureList: FeatureItem[] = [
+const features: FeatureItem[] = [
   {
-    title: 'Deploy Anywhere',
-    Svg: require('@site/static/img/logo.svg').default,
-    description: (
-      <>
-        Run the scraper as a Linux service, container, Docker Compose service,
-        or Kubernetes workload.
-      </>
-    ),
+    title: 'Long-term history',
+    Icon: Clock3,
+    description: 'Partitioned storage with configurable retention.',
   },
   {
-    title: 'Store Everything',
-    Svg: require('@site/static/img/logo.svg').default,
-    description: (
-      <>
-        Persist SQL, sessions, waits, blocking, metrics and ASH samples 
-        into PostgreSQL with configurable retention.
-      </>
-    ),
+    title: 'Complete visibility',
+    Icon: ChartNoAxesCombined,
+    description: 'SQL, sessions, waits, blocking, ASH and system metrics.',
   },
   {
-    title: 'Investigate Anything',
-    Svg: require('@site/static/img/logo.svg').default,
-    description: (
-      <>
-        Navigate years of performance history from Grafana dashboards
-        backed directly by PostgreSQL.
-      </>
-    ),
+    title: 'Troubleshoot faster',
+    Icon: ShieldCheck,
+    description: 'Correlate events and find root causes in seconds.',
+  },
+  {
+    title: 'PostgreSQL powered',
+    Icon: Database,
+    description: 'Your data, your queries, with no proprietary lock-in.',
+  },
+  {
+    title: 'Open and extensible',
+    Icon: Puzzle,
+    description: 'FOSS core with plugins and custom dashboards.',
+  },
+  {
+    title: 'Deploy anywhere',
+    Icon: Box,
+    description: 'Linux service, Docker, Compose or Kubernetes.',
   },
 ];
 
-function Feature({title, Svg, description}: FeatureItem) {
-  return (
-    <div className={clsx('col col--4')}>
-      <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
-      </div>
-      <div className="text--center padding-horiz--md">
-        <Heading as="h3">{title}</Heading>
-        <p>{description}</p>
-      </div>
-    </div>
-  );
-}
-
 export default function HomepageFeatures(): ReactNode {
   return (
-    <section className={styles.features}>
-      <div className="container">
-        <div className="row">
-          {FeatureList.map((props, idx) => (
-            <Feature key={idx} {...props} />
-          ))}
-        </div>
+    <section className={styles.features} aria-label="Project capabilities">
+      <div className={styles.featureGrid}>
+        {features.map(({title, Icon, description}) => (
+          <article className={styles.feature} key={title}>
+            <Icon className={styles.featureIcon} strokeWidth={1.7} aria-hidden="true" />
+            <div>
+              <Heading as="h3">{title}</Heading>
+              <p>{description}</p>
+            </div>
+          </article>
+        ))}
       </div>
     </section>
   );

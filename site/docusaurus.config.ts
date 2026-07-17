@@ -66,7 +66,7 @@ const config: Config = {
       title : 'Oracle DB Performance Scraper',
       logo : {
         alt : 'Oracle DB Performance Scraper Logo',
-        src : 'img/logo_home.png',
+        src : 'img/harry/harry.png',
       },
       items : [
         {
@@ -76,9 +76,21 @@ const config: Config = {
           label : 'Docs',
         },
         {
+          to : '/docs/getting-started/basics',
+          label : 'Tutorial',
+          position : 'left',
+        },
+        {
           href : 'https://github.com/dodger-one/oracledb-performance-scraper',
           label : 'GitHub',
           position : 'right',
+          className : 'navbar-github-button',
+        },
+        {
+          to : '/docs/intro',
+          label : 'Read the documentation',
+          position : 'right',
+          className : 'navbar-docs-button',
         },
       ],
     },
