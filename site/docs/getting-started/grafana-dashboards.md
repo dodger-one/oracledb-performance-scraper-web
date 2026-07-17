@@ -70,15 +70,20 @@ Purpose:
 - SQL efficiency outliers.
 - Selected `SQL_ID` time delta.
 - Selected `SQL_ID` plan hashes.
-- SQL text lookup.
+- Short SQL text previews in ranking tables.
+- Complete SQL text for the selected `SQL_ID`.
 
-Primary table:
+Primary tables:
 
 ```text
 oracle_sql_samples
+oracle_sql_texts
 ```
 
-Use the `SQL_ID` textbox variable to drill into a specific statement.
+Use the `SQL_ID` textbox variable to drill into a specific statement. The
+bottom panel displays the complete Oracle `SQL_FULLTEXT` for that selection in
+a wrapped, monospaced view. Ranking tables intentionally show only a short
+preview.
 
 [![Oracle SQL Performance dashboard showing SQL delta rankings, efficiency outliers, and selected SQL timing](/img/screenshots/sql_performance.png)](/img/screenshots/sql_performance.png)
 
@@ -131,6 +136,7 @@ The dashboards assume the scraper is writing these tables:
 
 - `oracle_database_activity_samples`
 - `oracle_sql_samples`
+- `oracle_sql_texts`
 - `oracle_session_samples`
 - `oracle_blocking_session_samples`
 

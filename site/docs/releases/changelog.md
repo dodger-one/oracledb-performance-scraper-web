@@ -18,6 +18,10 @@ List of upcoming and historic changes to the scraper.
 - Document the boundary between native typed performance collectors and
   additional SQL-derived metrics stored in `oracle_metric_samples`, including
   PostgreSQL cardinality and retention considerations.
+- Normalize Oracle SQL text into `oracle_sql_texts`, collect complete
+  `SQL_FULLTEXT` once per source database and SQL ID, and expire unreferenced
+  text with the global PostgreSQL retention policy. The SQL Performance
+  dashboard keeps short previews and adds a full-width selected-SQL text panel.
 - Rename the project runtime to scraper terminology, including Go types, the default binary name, Docker targets, sample manifests, and active documentation.
 - Replace the Prometheus scrape endpoint runtime with scheduled Oracle metric collection that writes neutral metric samples to PostgreSQL using batched `COPY` inserts.
 - Add PostgreSQL output configuration, schema auto-migration for scrape summaries and metric samples, and example configuration entries.

@@ -122,8 +122,9 @@ Properties:
 - `url`: PostgreSQL connection URL. Required.
 - `autoMigrate`: Create tables and indexes on startup. Defaults to `true`.
 - `retention`: Optional retention duration. When set, expired daily partitions
-  are dropped across all sample tables. Use Go duration syntax such as `720h`
-  for 30 days.
+  are dropped across all sample tables and SQL text no longer referenced within
+  the retained partition horizon is deleted. Use Go duration syntax such as
+  `720h` for 30 days.
 - `maxConns`: Maximum PostgreSQL pool connections. Defaults to `4`.
 - `minConns`: Minimum PostgreSQL pool connections. Defaults to `0`.
 - `connMaxLifetime`: PostgreSQL pool connection lifetime. Defaults to `1h`.
@@ -139,6 +140,10 @@ output:
     blockingSessionsTable: oracle_blocking_session_samples
     databaseActivityTable: oracle_database_activity_samples
 ```
+
+`oracle_sql_texts` is derived from `sqlSamplesTable` and is created in the same
+PostgreSQL schema. For example, `monitoring.oracle_sql_samples` uses
+`monitoring.oracle_sql_texts`.
 
 Schema-qualified names may be used, for example:
 

@@ -53,13 +53,14 @@ The scraper writes to these primary PostgreSQL tables:
 
 - `oracle_metric_samples`
 - `oracle_sql_samples`
+- `oracle_sql_texts`
 - `oracle_session_samples`
 - `oracle_blocking_session_samples`
 - `oracle_database_activity_samples`
 
 When `output.postgresql.autoMigrate: true` is configured, the scraper creates
-the parent partitioned tables and indexes automatically. Daily child partitions
-are created just before data is written.
+the parent partitioned tables, the SQL text lookup table, and indexes
+automatically. Daily child partitions are created just before data is written.
 
 ## Supported Oracle Versions
 

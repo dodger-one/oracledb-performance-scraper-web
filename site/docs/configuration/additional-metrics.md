@@ -54,8 +54,9 @@ define the same metrics.
 
 The operational pack intentionally excludes the inherited generic `top_sql`
 metric. SQL ID, SQL text, child cursor, plan, and execution statistics already
-belong to the native `oracle_sql_samples` collector and its SQL Performance
-dashboard.
+belong to the native SQL performance collector, which writes statistics to
+`oracle_sql_samples` and normalized full text to `oracle_sql_texts` for the SQL
+Performance dashboard.
 
 ## Metric Schema
 
