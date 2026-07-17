@@ -201,7 +201,7 @@ export default function Home(): ReactNode {
   return (
     <Layout
       title="Oracle DB Performance Scraper"
-      description="Collect Oracle performance data in PostgreSQL for SQL-backed Grafana dashboards">
+      description="Open performance data pipeline for Oracle databases. Collect once. Investigate from anywhere.">
       <HomepageHeader />
       <main>
         <ArchitectureDiagram />
