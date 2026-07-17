@@ -9,6 +9,10 @@ List of upcoming and historic changes to the scraper.
 
 ### Next, TBD
 
+- Add bounded, interval-controlled `GV$SQL_PLAN` collection for top SQL cursors,
+  deduplicate plan operations in `oracle_sql_plans`, retain plans while they are
+  referenced by SQL samples, and expose selected execution plans in the Oracle
+  SQL Performance dashboard.
 - Replace `metrics.default` and `metrics.custom` with one optional ordered
   `metrics.definitions` list. Native SQL, session, blocking, and DAH collection
   now runs without any generic metric definition file.

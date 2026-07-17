@@ -33,6 +33,7 @@ queried by SQL-backed Grafana dashboards.
   files, including the supplied `oracle-operational-metrics.toml` pack.
 - Direct performance collection from Oracle dynamic performance views:
   - `GV$SQL`
+  - `GV$SQL_PLAN`
   - `GV$SESSION`
   - `GV$ACTIVE_SESSION_HISTORY`
 - Database Activity History fallback from current session samples when ASH is
@@ -54,13 +55,15 @@ The scraper writes to these primary PostgreSQL tables:
 - `oracle_metric_samples`
 - `oracle_sql_samples`
 - `oracle_sql_texts`
+- `oracle_sql_plans`
 - `oracle_session_samples`
 - `oracle_blocking_session_samples`
 - `oracle_database_activity_samples`
 
 When `output.postgresql.autoMigrate: true` is configured, the scraper creates
-the parent partitioned tables, the SQL text lookup table, and indexes
-automatically. Daily child partitions are created just before data is written.
+the parent partitioned tables, the SQL text and execution-plan lookup tables,
+and indexes automatically. Daily child partitions are created just before data
+is written.
 
 ## Supported Oracle Versions
 

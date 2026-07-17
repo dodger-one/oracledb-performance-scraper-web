@@ -45,6 +45,13 @@ metrics:
   definitions:
     - /etc/oracledb-monitor/oracle-operational-metrics.toml
 
+performance:
+  sqlPlans:
+    enabled: true
+    interval: 2m
+    topN: 20
+    queryTimeout: 10s
+
 output:
   postgresql:
     url: ${POSTGRES_URL}

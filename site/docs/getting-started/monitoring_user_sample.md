@@ -64,6 +64,7 @@ GRANT SELECT ON sys.gv_$parameter TO monitoring_user;
 GRANT SELECT ON sys.gv_$database TO monitoring_user;
 GRANT SELECT ON sys.gv_$active_session_history TO monitoring_user;
 GRANT SELECT ON sys.gv_$sql TO monitoring_user;
+GRANT SELECT ON sys.gv_$sql_plan TO monitoring_user;
 GRANT SELECT ON sys.gv_$con_sysmetric TO monitoring_user;
 ```
 

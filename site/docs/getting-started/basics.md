@@ -48,6 +48,7 @@ grant select on sys.gv_$parameter to scraperuser;
 grant select on sys.gv_$database to scraperuser;
 grant select on sys.gv_$active_session_history to scraperuser;
 grant select on sys.gv_$sql to scraperuser;
+grant select on sys.gv_$sql_plan to scraperuser;
 grant select on sys.gv_$con_sysmetric to scraperuser;
 grant select on sys.v_$diag_alert_ext to scraperuser; -- for alert logs only
 ```
@@ -120,6 +121,13 @@ metrics:
   scrapeInterval: 15s
   definitions:
     - /etc/oracledb-monitor/oracle-operational-metrics.toml
+
+performance:
+  sqlPlans:
+    enabled: true
+    interval: 2m
+    topN: 20
+    queryTimeout: 10s
 
 output:
   postgresql:

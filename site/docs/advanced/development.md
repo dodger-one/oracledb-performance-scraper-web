@@ -17,12 +17,12 @@ The runtime flow is:
 - Open the PostgreSQL connection pool and run schema migrations when
   `output.postgresql.autoMigrate` is enabled.
 - Start the lightweight web listener for `/healthz` and `/`.
-- Start scheduled native collectors for SQL, sessions, blocking, DAH, and alert
-  logs, plus any configured additional metrics.
+- Start scheduled native collectors for SQL, cached cursor plans, sessions,
+  blocking, DAH, and alert logs, plus any configured additional metrics.
 
 Generic TOML/YAML metrics are written to `oracle_metric_samples`. Performance
 collectors write to dedicated tables such as `oracle_sql_samples`,
-`oracle_sql_texts`, `oracle_session_samples`,
+`oracle_sql_texts`, `oracle_sql_plans`, `oracle_session_samples`,
 `oracle_blocking_session_samples`, and `oracle_database_activity_samples`.
 
 Grafana dashboards read PostgreSQL directly. The scraper does not expose Oracle

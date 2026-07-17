@@ -31,6 +31,13 @@ metrics:
   definitions:
     - /etc/oracledb-monitor/oracle-operational-metrics.toml
 
+performance:
+  sqlPlans:
+    enabled: true
+    interval: 2m
+    topN: 20
+    queryTimeout: 10s
+
 output:
   postgresql:
     url: ${POSTGRES_URL}
@@ -106,6 +113,31 @@ The removed pre-beta keys `default` and `custom` are rejected by strict YAML
 parsing. See [Additional Metrics](./additional-metrics.md) for migration and
 cardinality guidance.
 
+## Native Performance Configuration
+
+```yaml
+performance:
+  sqlPlans:
+    enabled: true
+    interval: 2m
+    topN: 20
+    queryTimeout: 10s
+```
+
+The `sqlPlans` collector reads cached cursor plans from `GV$SQL_PLAN`; it does
+not run `EXPLAIN PLAN` and does not require `STATISTICS_LEVEL=ALL`.
+
+- `enabled`: Enable cached cursor-plan collection. Defaults to `true`.
+- `interval`: Minimum interval between plan collection passes for each source
+  database. Defaults to `2m`.
+- `topN`: Maximum number of top SQL cursor candidates considered per pass.
+  Defaults to `20` and must be between `1` and `100`.
+- `queryTimeout`: Timeout for the bounded plan query. Defaults to `10s`.
+
+Plans already collected while they remain among the top candidates are not
+queried again. A plan that leaves and later returns to the candidate set may be
+refreshed safely through PostgreSQL upsert semantics.
+
 ## PostgreSQL Output
 
 ```yaml
@@ -122,9 +154,9 @@ Properties:
 - `url`: PostgreSQL connection URL. Required.
 - `autoMigrate`: Create tables and indexes on startup. Defaults to `true`.
 - `retention`: Optional retention duration. When set, expired daily partitions
-  are dropped across all sample tables and SQL text no longer referenced within
-  the retained partition horizon is deleted. Use Go duration syntax such as
-  `720h` for 30 days.
+  are dropped across all sample tables and SQL text and execution plans no
+  longer referenced within the retained partition horizon are deleted. Use Go
+  duration syntax such as `720h` for 30 days.
 - `maxConns`: Maximum PostgreSQL pool connections. Defaults to `4`.
 - `minConns`: Minimum PostgreSQL pool connections. Defaults to `0`.
 - `connMaxLifetime`: PostgreSQL pool connection lifetime. Defaults to `1h`.
@@ -141,9 +173,10 @@ output:
     databaseActivityTable: oracle_database_activity_samples
 ```
 
-`oracle_sql_texts` is derived from `sqlSamplesTable` and is created in the same
-PostgreSQL schema. For example, `monitoring.oracle_sql_samples` uses
-`monitoring.oracle_sql_texts`.
+`oracle_sql_texts` and `oracle_sql_plans` are derived from `sqlSamplesTable` and
+are created in the same PostgreSQL schema. For example,
+`monitoring.oracle_sql_samples` uses `monitoring.oracle_sql_texts` and
+`monitoring.oracle_sql_plans`.
 
 Schema-qualified names may be used, for example:
 
