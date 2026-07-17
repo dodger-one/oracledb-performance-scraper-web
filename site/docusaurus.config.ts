@@ -6,8 +6,9 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 const config: Config = {
   title : 'Oracle DB Performance Scraper',
-  tagline : 'Open performance data pipeline for Oracle databases. Collect once. Investigate from anywhere.',
-  favicon : 'img/favicon-32x32.png',
+  tagline :
+      'Open performance data pipeline for Oracle databases. Collect once. Investigate from anywhere.',
+  favicon : 'img/harry/harry_favicon.png',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future : {
@@ -61,7 +62,7 @@ const config: Config = {
 
   themeConfig : {
     // Replace with your project's social card
-    image : 'img/harry/harry.png',
+    image : 'img/harry/harry_mini.png',
     navbar : {
       title : 'Oracle DB Performance Scraper',
       logo : {
