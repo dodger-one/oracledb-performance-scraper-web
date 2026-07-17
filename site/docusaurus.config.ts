@@ -6,7 +6,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 const config: Config = {
   title : 'Oracle DB Performance Scraper',
-  tagline : 'High-performance observability for Oracle databases',
+  // tagline : 'Long-term Oracle performance analysis powered by PostgreSQL',
   favicon : 'img/favicon-32x32.png',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future

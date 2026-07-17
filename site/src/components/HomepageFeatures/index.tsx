@@ -11,7 +11,7 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Flexible Deployment',
+    title: 'Deploy Anywhere',
     Svg: require('@site/static/img/logo.svg').default,
     description: (
       <>
@@ -21,22 +21,22 @@ const FeatureList: FeatureItem[] = [
     ),
   },
   {
-    title: 'PostgreSQL History',
+    title: 'Store Everything',
     Svg: require('@site/static/img/logo.svg').default,
     description: (
       <>
-        Store SQL, session, blocking, activity, and configurable metric samples
-        in partitioned PostgreSQL tables with retention.
+        Persist SQL, sessions, waits, blocking, metrics and ASH samples 
+        into PostgreSQL with configurable retention.
       </>
     ),
   },
   {
-    title: 'Performance Troubleshooting',
+    title: 'Investigate Anything',
     Svg: require('@site/static/img/logo.svg').default,
     description: (
       <>
-        Investigate database activity, SQL performance, current sessions, and
-        blocking with PostgreSQL-backed Grafana dashboards.
+        Navigate years of performance history from Grafana dashboards
+        backed directly by PostgreSQL.
       </>
     ),
   },
