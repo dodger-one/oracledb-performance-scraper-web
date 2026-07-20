@@ -9,6 +9,15 @@ List of upcoming and historic changes to the scraper.
 
 ### Next, TBD
 
+- Make Oracle ASH collection explicitly opt-in and default activity analytics
+  to independent two-second `GV$SESSION` sampling. Persist the activity source
+  and represented duration, use duration-weighted AAS calculations, and warn
+  operators that enabling ASH requires them to verify Diagnostics Pack
+  licensing.
+- Move frequent SQL counter collection to recently active `GV$SQLSTATS` rows so
+  short, high-frequency statements remain diagnosable without appearing in a
+  session sample. Fetch `SQL_FULLTEXT` and child-plan identities only through
+  the bounded, slower SQL detail pass.
 - Add bounded, interval-controlled `GV$SQL_PLAN` collection for top SQL cursors,
   deduplicate plan operations in `oracle_sql_plans`, retain plans while they are
   referenced by SQL samples, and expose selected execution plans in the Oracle
@@ -37,9 +46,8 @@ List of upcoming and historic changes to the scraper.
 - Preserve available Oracle performance samples when one of the SQL, session, or blocking-session queries fails.
 - Document the Oracle PDB scope of monitoring users and the additional `GV_$SQL` permission required for SQL performance samples.
 - Pass explicit Go build arguments through the local Compose image build for compatibility with Podman builds.
-- Add Database Activity History collection from `GV$ACTIVE_SESSION_HISTORY`, PostgreSQL storage, and a dedicated DAH Grafana dashboard.
+- Add PostgreSQL activity-history storage and a dedicated DAH Grafana dashboard.
 - Split Docker builds into a reusable `build-deps` stage and wire the local compose build to reuse that dependency image cache.
-- Make the DAH dashboard tolerate an empty activity table and fall back to session-derived activity samples when ASH collection fails or returns no rows, including sessions with current SQL or non-idle waits.
 - Include collected Database Activity History samples in the aggregated PostgreSQL write payload.
 - Replace the scrape-summary parent table with daily range-partitioned PostgreSQL sample tables and create partitions on demand before writing samples.
 - Add a single PostgreSQL sample retention setting that drops expired daily partitions across all sample tables.

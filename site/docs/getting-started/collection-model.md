@@ -5,9 +5,14 @@ sidebar_position: 2
 
 # Collection Model
 
-The scraper has two independent collection paths: native performance samples
-and optional additional metrics. They share the global collection schedule but
-use different PostgreSQL models and serve different troubleshooting needs.
+The scraper has native performance collection and optional additional metrics.
+Database activity uses its own short sampling schedule so slower SQL, plan, and
+additional-metric queries cannot delay activity observations.
+
+:::warning Oracle Diagnostics Pack
+The Oracle ASH collector is **DISABLED by default**. Enabling it requires that
+**YOU verify your Oracle Diagnostics Pack licensing**.
+:::
 
 ## Native Performance Collection
 
@@ -17,12 +22,31 @@ tables:
 
 | PostgreSQL table | Collected data |
 | --- | --- |
-| `oracle_sql_samples` | SQL statistics, plan hashes, execution counters, CPU, elapsed time, and I/O |
+| `oracle_sql_samples` | `GV$SQLSTATS` counters by SQL ID, including executions, CPU, elapsed time, and I/O |
 | `oracle_sql_texts` | Complete SQL text, stored once per source database and SQL ID |
 | `oracle_sql_plans` | Cached `GV$SQL_PLAN` operations, stored once per cursor-plan identity |
 | `oracle_session_samples` | Current sessions, SQL, waits, modules, programs, and machines |
 | `oracle_blocking_session_samples` | Waiter and blocker relationships |
-| `oracle_database_activity_samples` | ASH-style activity, with a current-session fallback |
+| `oracle_database_activity_samples` | Activity observations from `GV$SESSION` by default, or explicitly enabled Oracle ASH |
+
+The default `session` activity source polls active foreground sessions from
+`GV$SESSION`. Every stored observation records `sample_source = SESSION` and
+the duration represented by that observation. This supports AAS, wait-class,
+wait-event, SQL, session, module, service, and blocking analysis without
+querying Oracle ASH.
+
+The optional `ash` source reads `GV$ACTIVE_SESSION_HISTORY` and stores
+`sample_source = ASH`. It adds Oracle's internal sample timing and ASH-only
+details such as the active plan hash and plan line. The two sources are never
+silently substituted: dashboards expose the source stored with each row.
+
+Session sampling cannot observe SQL that starts and finishes between polls.
+The frequent `GV$SQLSTATS` collector complements it for short, frequently
+executed statements. PostgreSQL derives changes between cumulative counter
+snapshots, so a statement executing thousands of times per minute remains
+visible even when no session poll catches its 50-millisecond executions. An
+activity observation should not be interpreted as an exact trace of every
+execution.
 
 The included Grafana dashboards query these tables directly. They do not query
 `oracle_metric_samples`.
@@ -33,9 +57,12 @@ events, SQL text, modules, programs, and machines. Typed columns make these
 values easier to index, aggregate, filter, and evolve than a generic label
 document.
 
-SQL statistics, SQL text, and execution plans have different storage lifecycles.
+SQL statistics, SQL text, and execution plans have different collection and storage lifecycles.
 `oracle_sql_samples` is a daily partitioned fact table and does not duplicate
-the statement text in every sample. `oracle_sql_texts` is a non-partitioned
+the statement text in every sample. Its frequent query reads recently active
+rows from `GV$SQLSTATS`, which Oracle provides as a SQL-ID-level statistics
+view. The slower bounded detail pass reads `SQL_FULLTEXT` and child cursor keys
+from `GV$SQL`. `oracle_sql_texts` is a non-partitioned
 lookup table keyed by `(source_database, sql_id)` and stores Oracle
 `SQL_FULLTEXT`, first-seen, last-text-seen, and last-reference timestamps.
 Dashboards join the tables logically; PostgreSQL foreign keys are intentionally

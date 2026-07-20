@@ -7,11 +7,16 @@ sidebar_position: 1
 Oracle DB Performance Scraper collects Oracle database performance data on a
 schedule and stores it in PostgreSQL for Grafana dashboards and troubleshooting.
 
+:::warning Oracle Diagnostics Pack
+The Oracle ASH collector is **DISABLED by default**. Enabling it requires that
+**YOU verify your Oracle Diagnostics Pack licensing**.
+:::
+
 This is not a Prometheus exporter. It does not expose Oracle metrics on `/metrics`. Instead, it:
 
 - connects to one or more Oracle databases,
-- collects native SQL, session, blocking-session, and Database Activity History
-  samples by default,
+- collects native SQL, session, blocking-session, and session-sampled database
+  activity by default,
 - optionally collects additional SQL-derived metrics from TOML or YAML
   definitions,
 - writes those samples to PostgreSQL,
@@ -32,12 +37,11 @@ queried by SQL-backed Grafana dashboards.
 - Optional additional metrics loaded from ordered TOML or YAML definition
   files, including the supplied `oracle-operational-metrics.toml` pack.
 - Direct performance collection from Oracle dynamic performance views:
+  - `GV$SQLSTATS`
   - `GV$SQL`
   - `GV$SQL_PLAN`
   - `GV$SESSION`
-  - `GV$ACTIVE_SESSION_HISTORY`
-- Database Activity History fallback from current session samples when ASH is
-  unavailable or empty.
+  - optional `GV$ACTIVE_SESSION_HISTORY`, only when explicitly enabled
 - Grafana dashboards backed by PostgreSQL:
   - Database Activity History (DAH)
   - Oracle SQL Performance
@@ -67,9 +71,9 @@ is written.
 
 ## Supported Oracle Versions
 
-The scraper is intended for Oracle Database 19c and newer. Some dashboards need
-access to `GV$ACTIVE_SESSION_HISTORY`; if that view is unavailable or not
-granted, the DAH collector falls back to active session samples where possible.
+The scraper is intended for Oracle Database 19c and newer. The default activity
+collector uses `GV$SESSION`. `GV$ACTIVE_SESSION_HISTORY` is accessed only when
+the operator explicitly configures `performance.activity.source: ash`.
 
 ## Acknowledgements
 

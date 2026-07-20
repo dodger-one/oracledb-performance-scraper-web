@@ -46,13 +46,18 @@ Primary table:
 oracle_database_activity_samples
 ```
 
-This dashboard is the ASH/AAS-style historical view. It intentionally uses
+This dashboard is the AAS-style historical activity view. It intentionally uses
 high-cardinality fields that should not be Prometheus labels.
 
 [![Database Activity History dashboard showing average active sessions, top SQL, top sessions, and recent activity](/img/screenshots/dah.png)](/img/screenshots/dah.png)
 
 _Database Activity History dashboard with anonymized sample data. Select the
 image to open it at full resolution._
+
+The `Activity Source` variable keeps `SESSION`, `ASH`, and migrated `LEGACY`
+rows separate. `SESSION` is the default collector. `ASH` appears only when the
+scraper was explicitly configured to use Oracle ASH and the operator accepted
+responsibility for verifying Diagnostics Pack licensing.
 
 ### Oracle SQL Performance
 

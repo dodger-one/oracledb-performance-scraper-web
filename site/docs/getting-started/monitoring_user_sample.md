@@ -62,8 +62,8 @@ GRANT SELECT ON sys.gv_$session TO monitoring_user;
 GRANT SELECT ON sys.gv_$resource_limit TO monitoring_user;
 GRANT SELECT ON sys.gv_$parameter TO monitoring_user;
 GRANT SELECT ON sys.gv_$database TO monitoring_user;
-GRANT SELECT ON sys.gv_$active_session_history TO monitoring_user;
 GRANT SELECT ON sys.gv_$sql TO monitoring_user;
+GRANT SELECT ON sys.gv_$sqlstats TO monitoring_user;
 GRANT SELECT ON sys.gv_$sql_plan TO monitoring_user;
 GRANT SELECT ON sys.gv_$con_sysmetric TO monitoring_user;
 ```
@@ -76,9 +76,20 @@ GRANT SELECT ON sys.v_$diag_alert_ext TO monitoring_user;
 
 Additional permissions may be required for user-defined metric queries.
 
-Database Activity History uses `GV$ACTIVE_SESSION_HISTORY`. Confirm the
-applicable Oracle licensing requirements before enabling or relying on
-ASH-derived reporting in production.
+### Optional Oracle ASH Grant
+
+:::warning Oracle Diagnostics Pack
+The Oracle ASH collector is **DISABLED by default**. Enabling it requires that
+**YOU verify your Oracle Diagnostics Pack licensing**.
+:::
+
+The default `performance.activity.source: session` does not need access to
+`GV$ACTIVE_SESSION_HISTORY`. Only grant access when the deployment will
+explicitly use `source: ash`:
+
+```sql
+GRANT SELECT ON sys.gv_$active_session_history TO monitoring_user;
+```
 
 ## PDB Database
 

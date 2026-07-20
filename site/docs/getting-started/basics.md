@@ -46,8 +46,8 @@ grant select on sys.gv_$session to scraperuser;
 grant select on sys.gv_$resource_limit to scraperuser;
 grant select on sys.gv_$parameter to scraperuser;
 grant select on sys.gv_$database to scraperuser;
-grant select on sys.gv_$active_session_history to scraperuser;
 grant select on sys.gv_$sql to scraperuser;
+grant select on sys.gv_$sqlstats to scraperuser;
 grant select on sys.gv_$sql_plan to scraperuser;
 grant select on sys.gv_$con_sysmetric to scraperuser;
 grant select on sys.v_$diag_alert_ext to scraperuser; -- for alert logs only
@@ -56,9 +56,17 @@ grant select on sys.v_$diag_alert_ext to scraperuser; -- for alert logs only
 Additional permissions may be required for user-defined metrics, depending on
 the tables and views queried by their definition files.
 
-Database Activity History uses `GV$ACTIVE_SESSION_HISTORY`. Confirm the
-applicable Oracle licensing requirements before relying on ASH-derived
-reporting in production.
+:::warning Oracle Diagnostics Pack
+The Oracle ASH collector is **DISABLED by default**. Enabling it requires that
+**YOU verify your Oracle Diagnostics Pack licensing**.
+:::
+
+The default session activity collector does not need an ASH grant. Only for an
+explicitly licensed `performance.activity.source: ash` deployment, add:
+
+```sql
+grant select on sys.gv_$active_session_history to scraperuser;
+```
 
 ## PostgreSQL Setup
 
@@ -123,6 +131,10 @@ metrics:
     - /etc/oracledb-monitor/oracle-operational-metrics.toml
 
 performance:
+  activity:
+    source: session
+    interval: 2s
+    queryTimeout: 2s
   sqlPlans:
     enabled: true
     interval: 2m

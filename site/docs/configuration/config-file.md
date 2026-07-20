@@ -32,6 +32,10 @@ metrics:
     - /etc/oracledb-monitor/oracle-operational-metrics.toml
 
 performance:
+  activity:
+    source: session
+    interval: 2s
+    queryTimeout: 2s
   sqlPlans:
     enabled: true
     interval: 2m
@@ -115,14 +119,35 @@ cardinality guidance.
 
 ## Native Performance Configuration
 
+:::warning Oracle Diagnostics Pack
+The Oracle ASH collector is **DISABLED by default**. Enabling it requires that
+**YOU verify your Oracle Diagnostics Pack licensing**.
+:::
+
 ```yaml
 performance:
+  activity:
+    source: session
+    interval: 2s
+    queryTimeout: 2s
   sqlPlans:
     enabled: true
     interval: 2m
     topN: 20
     queryTimeout: 10s
 ```
+
+The `activity` collector runs independently from `metrics.scrapeInterval`:
+
+- `source`: `session` or `ash`. Defaults to `session`. The default reads active
+  foreground sessions from `GV$SESSION` and does not access Oracle ASH.
+- `interval`: Activity sampling interval. Defaults to `2s`.
+- `queryTimeout`: Timeout for one activity query. Defaults to `2s`.
+
+Setting `source: ash` makes the scraper query
+`GV$ACTIVE_SESSION_HISTORY`. The setting is never enabled automatically from
+`CONTROL_MANAGEMENT_PACK_ACCESS`, because an enabled database feature does not
+establish that a deployment owns the corresponding license.
 
 The `sqlPlans` collector reads cached cursor plans from `GV$SQL_PLAN`; it does
 not run `EXPLAIN PLAN` and does not require `STATISTICS_LEVEL=ALL`.
