@@ -78,10 +78,12 @@ Additional permissions may be required for user-defined metric queries.
 
 ### Optional Oracle ASH Grant
 
-:::warning Oracle Diagnostics Pack
-The Oracle ASH collector is **DISABLED by default**. Enabling it requires that
-**YOU verify your Oracle Diagnostics Pack licensing**.
+:::warning  
+Oracle Diagnostics Pack  
+The Oracle ASH collector is **DISABLED by default**.   
+Enabling it requires that **YOU verify your Oracle Diagnostics Pack licensing**.
 :::
+
 
 The default `performance.activity.source: session` does not need access to
 `GV$ACTIVE_SESSION_HISTORY`. Only grant access when the deployment will

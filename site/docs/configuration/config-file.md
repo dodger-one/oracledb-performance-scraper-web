@@ -119,9 +119,10 @@ cardinality guidance.
 
 ## Native Performance Configuration
 
-:::warning Oracle Diagnostics Pack
-The Oracle ASH collector is **DISABLED by default**. Enabling it requires that
-**YOU verify your Oracle Diagnostics Pack licensing**.
+:::warning  
+Oracle Diagnostics Pack  
+The Oracle ASH collector is **DISABLED by default**.   
+Enabling it requires that **YOU verify your Oracle Diagnostics Pack licensing**.
 :::
 
 ```yaml

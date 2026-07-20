@@ -7,9 +7,10 @@ sidebar_position: 1
 Oracle DB Performance Scraper collects Oracle database performance data on a
 schedule and stores it in PostgreSQL for Grafana dashboards and troubleshooting.
 
-:::warning Oracle Diagnostics Pack
-The Oracle ASH collector is **DISABLED by default**. Enabling it requires that
-**YOU verify your Oracle Diagnostics Pack licensing**.
+:::warning
+Oracle Diagnostics Pack  
+The Oracle ASH collector is **DISABLED by default**.   
+Enabling it requires that **YOU verify your Oracle Diagnostics Pack licensing**.
 :::
 
 This is not a Prometheus exporter. It does not expose Oracle metrics on `/metrics`. Instead, it:

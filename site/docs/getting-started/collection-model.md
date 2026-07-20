@@ -9,9 +9,10 @@ The scraper has native performance collection and optional additional metrics.
 Database activity uses its own short sampling schedule so slower SQL, plan, and
 additional-metric queries cannot delay activity observations.
 
-:::warning Oracle Diagnostics Pack
-The Oracle ASH collector is **DISABLED by default**. Enabling it requires that
-**YOU verify your Oracle Diagnostics Pack licensing**.
+:::warning  
+Oracle Diagnostics Pack  
+The Oracle ASH collector is **DISABLED by default**.   
+Enabling it requires that **YOU verify your Oracle Diagnostics Pack licensing**.
 :::
 
 ## Native Performance Collection

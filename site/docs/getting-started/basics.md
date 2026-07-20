@@ -56,9 +56,10 @@ grant select on sys.v_$diag_alert_ext to scraperuser; -- for alert logs only
 Additional permissions may be required for user-defined metrics, depending on
 the tables and views queried by their definition files.
 
-:::warning Oracle Diagnostics Pack
-The Oracle ASH collector is **DISABLED by default**. Enabling it requires that
-**YOU verify your Oracle Diagnostics Pack licensing**.
+:::warning  
+Oracle Diagnostics Pack  
+The Oracle ASH collector is **DISABLED by default**.   
+Enabling it requires that **YOU verify your Oracle Diagnostics Pack licensing**.
 :::
 
 The default session activity collector does not need an ASH grant. Only for an
