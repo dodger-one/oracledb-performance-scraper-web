@@ -193,6 +193,8 @@ Type=simple
 User=oracledb-monitor
 Group=oracledb-monitor
 EnvironmentFile=/etc/oracledb-monitor/env
+# Match the Oracle database server operating-system time zone.
+Environment="ORA_SDTZ=Europe/Madrid"
 WorkingDirectory=/etc/oracledb-monitor
 ExecStart=/usr/local/bin/oracledb_performance_scraper --config.file=/etc/oracledb-monitor/config.yaml
 Restart=always
@@ -205,6 +207,13 @@ PrivateTmp=true
 [Install]
 WantedBy=multi-user.target
 ```
+
+Set `ORA_SDTZ` to the Oracle database server operating-system time-zone region,
+not necessarily the scraper server's time zone. Prefer a region such as
+`Europe/Madrid` over a fixed `+02:00` offset so daylight-saving changes remain
+correct. This process-level setting assumes the monitored databases use the
+same operating-system time zone; restart the service after changing it so all
+pooled Oracle sessions are recreated.
 
 Create the service user and start the service:
 

@@ -9,6 +9,10 @@ List of upcoming and historic changes to the scraper.
 
 ### Next, TBD
 
+- Document `ORA_SDTZ` in the systemd service configuration so godror sessions
+  can use the Oracle database server time zone.
+- Remove redundant source-database columns from Grafana table panels while
+  retaining the dashboard-level database filters and internal query joins.
 - Make Oracle ASH collection explicitly opt-in and default activity analytics
   to independent two-second `GV$SESSION` sampling. Persist the activity source
   and represented duration, use duration-weighted AAS calculations, and warn
