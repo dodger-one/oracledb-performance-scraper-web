@@ -14,8 +14,8 @@ List of upcoming and historic changes to the scraper.
   combining RAC instances and plan hashes by SQL ID.
 - Split SQL troubleshooting into a four-category Oracle SQL Performance
   overview and a linked Oracle SQL Top Consumers dashboard with top-20 ranking,
-  detailed time, workload and I/O graphs with fixed series colors, full SQL
-  text, and cached plans.
+  detailed time, workload and I/O graphs with fixed series colors and smooth
+  DAH-style area rendering, full SQL text, and cached plans.
 - Serialize additional metric queries per database to prevent simultaneous OCI
   connection creation when pooled connections reach their maximum lifetime.
 - Document `ORA_SDTZ` in the systemd service configuration so godror sessions
