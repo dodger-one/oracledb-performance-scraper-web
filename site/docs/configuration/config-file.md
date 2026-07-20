@@ -156,13 +156,19 @@ not run `EXPLAIN PLAN` and does not require `STATISTICS_LEVEL=ALL`.
 - `enabled`: Enable cached cursor-plan collection. Defaults to `true`.
 - `interval`: Minimum interval between plan collection passes for each source
   database. Defaults to `2m`.
-- `topN`: Maximum number of top SQL cursor candidates considered per pass.
-  Defaults to `20` and must be between `1` and `100`.
+- `topN`: Maximum number of SQL IDs selected for the detail pass. Candidates
+  are ranked by elapsed-time counter deltas accumulated from frequent
+  `GV$SQLSTATS` samples since the previous detail pass. Deltas are combined
+  across instances and plans for each SQL ID. Defaults to `20` and must be
+  between `1` and `100`.
 - `queryTimeout`: Timeout for the bounded plan query. Defaults to `10s`.
 
+The selected SQL IDs drive both `SQL_FULLTEXT` and cached-plan collection.
 Plans already collected while they remain among the top candidates are not
 queried again. A plan that leaves and later returns to the candidate set may be
-refreshed safely through PostgreSQL upsert semantics.
+refreshed safely through PostgreSQL upsert semantics. A selected cursor that
+ages out of Oracle before the detail pass can have statistics without available
+text or plan rows.
 
 ## PostgreSQL Output
 

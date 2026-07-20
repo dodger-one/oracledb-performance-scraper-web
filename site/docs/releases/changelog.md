@@ -9,6 +9,15 @@ List of upcoming and historic changes to the scraper.
 
 ### Next, TBD
 
+- Rank bounded SQL text and plan candidates by elapsed-time deltas accumulated
+  from frequent `GV$SQLSTATS` samples instead of cumulative cursor lifetime,
+  combining RAC instances and plan hashes by SQL ID.
+- Split SQL troubleshooting into a four-category Oracle SQL Performance
+  overview and a linked Oracle SQL Top Consumers dashboard with top-20 ranking,
+  detailed time, workload and I/O graphs with fixed series colors, full SQL
+  text, and cached plans.
+- Serialize additional metric queries per database to prevent simultaneous OCI
+  connection creation when pooled connections reach their maximum lifetime.
 - Document `ORA_SDTZ` in the systemd service configuration so godror sessions
   can use the Oracle database server time zone.
 - Remove redundant source-database columns from Grafana table panels while
@@ -62,4 +71,3 @@ List of upcoming and historic changes to the scraper.
 - Change the DAH SQL_ID activity panel to a stacked top-SQL timeline using interval buckets and total/max legend values.
 - Add a PostgreSQL-backed Oracle SQL Performance Grafana dashboard for high-cardinality SQL diagnostics.
 - Refactor the Oracle DB Performance Grafana dashboard into a current sessions and blocking dashboard.
-

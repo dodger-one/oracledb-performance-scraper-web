@@ -62,8 +62,14 @@ SQL statistics, SQL text, and execution plans have different collection and stor
 `oracle_sql_samples` is a daily partitioned fact table and does not duplicate
 the statement text in every sample. Its frequent query reads recently active
 rows from `GV$SQLSTATS`, which Oracle provides as a SQL-ID-level statistics
-view. The slower bounded detail pass reads `SQL_FULLTEXT` and child cursor keys
-from `GV$SQL`. `oracle_sql_texts` is a non-partitioned
+view. Between detail passes, the scraper accumulates positive counter deltas
+across instances and plans for each SQL ID. The next bounded detail pass ranks
+those interval deltas by elapsed time, then reads `SQL_FULLTEXT` and child
+cursor keys from `GV$SQL` only for the selected SQL IDs. This prevents a
+historically expensive, long-lived cursor from permanently outranking a newly
+expensive statement merely because its lifetime counter is larger.
+
+`oracle_sql_texts` is a non-partitioned
 lookup table keyed by `(source_database, sql_id)` and stores Oracle
 `SQL_FULLTEXT`, first-seen, last-text-seen, and last-reference timestamps.
 Dashboards join the tables logically; PostgreSQL foreign keys are intentionally
@@ -72,11 +78,13 @@ present in the top-SQL collection.
 
 `oracle_sql_plans` is another non-partitioned lookup table. Each row represents
 one operation in a cached cursor plan, keyed by source database, instance, SQL
-ID, child number, plan hash, and plan line ID. The scraper considers a bounded
-top-N candidate set on a slower interval and avoids querying plans already
-collected while they remain active candidates. The stored cardinality, cost,
-bytes, and predicate values are optimizer estimates; runtime `ALLSTATS` data is
-not enabled or collected.
+ID, child number, plan hash, and plan line ID. The scraper uses the same bounded
+interval-delta candidate set for SQL text and plans, and avoids querying plans
+already collected while they remain active candidates. A selected cursor may
+age out of Oracle before the detail pass; its frequent SQL statistics remain
+valid, while text or plan details can be unavailable. The stored cardinality,
+cost, bytes, and predicate values are optimizer estimates; runtime `ALLSTATS`
+data is not enabled or collected.
 
 When PostgreSQL retention is enabled, SQL text and plan operations are deleted
 only after their last known reference is older than the oldest retained daily

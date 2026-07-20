@@ -73,11 +73,7 @@ Purpose:
 - Top SQL by CPU time delta.
 - Top SQL by User I/O wait delta.
 - SQL efficiency outliers.
-- Selected `SQL_ID` time delta.
-- Selected `SQL_ID` plan hashes.
 - Short SQL text previews in ranking tables.
-- Complete SQL text for the selected `SQL_ID`.
-- Cached execution-plan operations for the selected `SQL_ID` and plan hash.
 
 Primary tables:
 
@@ -87,17 +83,39 @@ oracle_sql_texts
 oracle_sql_plans
 ```
 
-Use the `SQL_ID` textbox variable to drill into a specific statement. The
-full-text panel displays the complete Oracle `SQL_FULLTEXT` for that selection
-in a wrapped, monospaced view. Select `PLAN_HASH_VALUE` to inspect the
-corresponding cached `GV$SQL_PLAN` operation tree, objects, optimizer estimates,
-partition bounds, and predicates. Ranking tables intentionally show only a
-short preview.
+This dashboard is the category overview. Select a `SQL_ID` in any ranking table
+to open the same database, SQL ID, and time range in the Top Consumers
+dashboard. Ranking tables intentionally show only a short SQL preview.
 
-[![Oracle SQL Performance dashboard showing SQL delta rankings, efficiency outliers, and selected SQL timing](/img/screenshots/sql_performance.png)](/img/screenshots/sql_performance.png)
+### Oracle SQL Top Consumers
 
-_Oracle SQL Performance diagnostic panels with anonymized sample data. Select
-the image to open it at full resolution._
+File:
+
+```text
+docker-compose/grafana/dashboards/oracle-sql-top-consumers.json
+```
+
+Purpose:
+
+- Top 20 SQL consumers by elapsed-time delta for the selected time range.
+- Elapsed, CPU, User I/O, application, concurrency, and cluster time breakdown.
+- Execution, row-processing, and parse-call deltas.
+- Buffer-get, disk-read, and direct-write deltas.
+- Category ranks and the dominant measured pressure for every top consumer.
+- Available plan hashes and cached execution-plan operations.
+- Complete `SQL_FULLTEXT` for the selected `SQL_ID`.
+
+The top table is the entry point for statement-level troubleshooting. Select a
+`SQL_ID` to populate the detailed graphs, full SQL text, and plans below it.
+Select `PLAN_HASH_VALUE` when a statement has multiple collected plans. The
+plan panel displays the cached `GV$SQL_PLAN` operation tree, objects, optimizer
+estimates, partition bounds, and predicates; it does not contain runtime
+`ALLSTATS` values.
+
+SQL text and plan details are collected on the bounded `performance.sqlPlans`
+schedule. A top consumer can therefore appear before its detail is collected,
+or after its Oracle cursor has aged out. The dashboard reports that state as
+`Not collected or aged out` instead of hiding the SQL statistics.
 
 ### Current Sessions and Blocking
 

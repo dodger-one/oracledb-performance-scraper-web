@@ -46,6 +46,7 @@ queried by SQL-backed Grafana dashboards.
 - Grafana dashboards backed by PostgreSQL:
   - Database Activity History (DAH)
   - Oracle SQL Performance
+  - Oracle SQL Top Consumers
   - Current Sessions and Blocking
 - Oracle alert log export to JSON files.
 - Oracle wallet, external authentication, OCI Vault, Azure Vault, and HashiCorp
